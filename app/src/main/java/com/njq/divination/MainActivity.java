@@ -5,7 +5,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.TextView;
 
+import com.blankj.utilcode.util.AppUtils;
 import com.blankj.utilcode.util.KeyboardUtils;
+import com.blankj.utilcode.util.ResourceUtils;
 import com.blankj.utilcode.util.TimeUtils;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.model.Response;
@@ -15,7 +17,11 @@ import com.njq.divination.http.McResponse;
 import com.njq.divination.tools.Utils;
 
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -27,7 +33,6 @@ public class MainActivity extends AppCompatActivity {
     TextView tvYin;
     @BindView(R.id.tv_tianzhi)
     TextView tvTianzhi;
-    private String time = "http://www.sojson.com/open/api/lunar/json.shtml?date=";
     private static final String TAG = "MainActivity";
 
     @Override
@@ -35,36 +40,29 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
-        time = time + TimeUtils.getNowString(simpleDateFormat);
-        getData();
+        setData();
     }
 
-    private void getData() {
-        OkGo.<McResponse<TimeBean>>get(time)
-                .tag(this)
-                .execute(new JsonCallback<McResponse<TimeBean>>() {
+    private void setData() {
 
-                    @Override
-                    public void onSuccess(Response<McResponse<TimeBean>> response) {
-                        TimeBean data = response.body().getData();
-                        tvYang.setText("阳历："+data.getYear()+"-"+data.getMonth()+"-"+data.getDay());
-                        tvYin.setText("农历："+data.getCnmonth()+"月"+data.getCnday());
-                        tvTianzhi.setText("天干地支："+data.getCyclicalYear()+"   "+data.getCyclicalMonth()+"   "+data.getCyclicalDay()+"");
-                    }
-
-                    @Override
-                    public void onError(Response<McResponse<TimeBean>> response) {
-                        if (response.getException() != null) {
-                            String message = response.getException().getMessage();
-                            Log.e(TAG,message);
-                            Utils.TS(message);
-                            tvYang.setText("时间获取失败");
-                            tvYin.setText("时间获取失败");
-                            tvTianzhi.setText("时间获取失败");
-                            KeyboardUtils.hideSoftInput();
-                        }
-                    }
-                });
+        Calendar today = Calendar.getInstance();
+        Date date = new Date();
+        today.setTime(date);//加载当前日期
+        com.njq.divination.tools.TimeUtils birth = new com.njq.divination.tools.TimeUtils(today,this);
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd  HH");
+        Map lunar = birth.toLunar();//计算输出阴历日期
+        String animalsYear = birth.animalsYear() + "年";//计算输出属相
+        String dayTime = sdf.format(date);//输出阳历日期
+        String weekDay = "星期" + birth.getChinaWeekdayString(today.getTime().toString().substring(0, 3));//计算输出星期几
+        Map map = birth.horoscope(dayTime);
+        Object cY = map.get("cY");
+        Object cM = map.get("cM");
+        Object cD = map.get("cD");
+        Object cH = map.get("cH");
+        Log.e(TAG,"阳历："+dayTime+"时    "+weekDay+"\n"+"阴历："+
+                (String)lunar.get("m")+lunar.get("d")+"    "+animalsYear+"\n"+"天干地支："+cY+"  "+cM+"  "+cD+"  "+cH+"\n");
+        tvYang.setText("阳历："+dayTime+"时    "+weekDay);
+        tvYin.setText("阴历："+(String)lunar.get("m")+lunar.get("d")+"    "+animalsYear);
+        tvTianzhi.setText("天干地支："+cY+"  "+cM+"  "+cD+"  "+cH);
     }
 }

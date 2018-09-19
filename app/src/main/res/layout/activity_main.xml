@@ -11,7 +11,8 @@
         android:layout_height="wrap_content"
         android:text="加载中...."
         android:textColor="#222222"
-        android:textSize="18dp"
+        android:layout_marginTop="5dp"
+        android:textSize="16dp"
         android:layout_centerInParent="true"
       />
     <TextView
@@ -20,7 +21,8 @@
         android:layout_height="wrap_content"
         android:text="加载中...."
         android:textColor="#222222"
-        android:textSize="18dp"
+        android:layout_marginTop="5dp"
+        android:textSize="16dp"
         android:layout_centerInParent="true"
       />
     <TextView
@@ -29,8 +31,9 @@
         android:layout_height="wrap_content"
         android:textStyle="bold"
         android:text="加载中...."
+        android:layout_marginTop="5dp"
         android:textColor="#222222"
-        android:textSize="20dp"
+        android:textSize="18dp"
         android:layout_centerInParent="true"
       />
 

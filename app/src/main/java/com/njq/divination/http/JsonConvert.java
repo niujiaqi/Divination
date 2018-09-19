@@ -149,7 +149,7 @@ public class JsonConvert<T> implements Converter<T> {
                 return (T) lzyResponse;
             } else {
                 //直接将服务端的错误信息抛出，onError中可以获取
-                throw new IllegalStateException("错误代码：" + code1 + "，提示信息：" + jsonObject.getString("msg"));
+                throw new IllegalStateException("错误代码：" + code1 + "，提示信息：" + jsonObject.getString("message"));
             }
 
         }

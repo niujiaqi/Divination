@@ -38,7 +38,7 @@ public class BaseApplication extends Application {
         //log相关
         LoggingInterceptor loggingInterceptor = new LoggingInterceptor(getString(R.string.app_name));
         builder.addInterceptor(loggingInterceptor);                                 //添加OkGo默认debug日志
-        builder.cookieJar(new CookieJarImpl(new MemoryCookieStore()));
+//        builder.cookieJar(new CookieJarImpl(new MemoryCookieStore()));
 
         //超时时间设置，默认60秒
         builder.readTimeout(10000, TimeUnit.MILLISECONDS);      //全局的读取超时时间
