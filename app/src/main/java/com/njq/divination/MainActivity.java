@@ -9,6 +9,7 @@ import com.njq.divination.tools.TimeUtils;
 import com.njq.divination.tools.Utils;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Map;
@@ -80,9 +81,11 @@ public class MainActivity extends AppCompatActivity {
         Object cH = map.get("cH");
         String monthWill1 = Utils.getMonthWill(monthWill);
         String h = Utils.getH((String)cH);
-        Log.e(TAG, "阳历：" + dayTime + "时    " + weekDay + "\n" + "阴历：" +
+        ArrayList<String> arrayTP = Utils.getArrayTP(Utils.getDZPos(monthWill1), Utils.getDZPos(h));
+        setTP(arrayTP);
+        Log.e(TAG, "\n阳历：" + dayTime + "时    " + weekDay + "\n" + "阴历：" +
                 (String) lunar.get("m") + lunar.get("d") + "    " + animalsYear + "\n" +
-                "天干地支：" + cY + "  " + cM + "  " + cD + "  " + cH + "\n" +
+                "天干地支：" + cY + "  " + cM + "  " + cD + "  " + cH + "\n"+
                 "月将：    " + monthWill+ "\n" +
         "天盘：    "+monthWill1+"将  占在  "+h+"时");
         tvYang.setText("阳历：" + dayTime + "时    " + weekDay);
@@ -90,7 +93,22 @@ public class MainActivity extends AppCompatActivity {
         tvTianzhi.setText("天干地支：" + cY + "  " + cM + "  " + cD + "  " + cH);
         tvYuejiang.setText("月将：        " + monthWill);
         tvTianpan.setText("天盘：    "+monthWill1+"将  占在  "+h+"时");
-//        Utils.getArrayTP(Utils.getDZPos(monthWill1),Utils.getDZPos(h));
-        Utils.getArrayTP(5,7);
+
+    }
+
+
+    public void setTP(ArrayList<String> arrayTP){
+        tv1.setText(arrayTP.get(0));
+        tv2.setText(arrayTP.get(1));
+        tv3.setText(arrayTP.get(2));
+        tv4.setText(arrayTP.get(3));
+        tv5.setText(arrayTP.get(4));
+        tv6.setText(arrayTP.get(5));
+        tv7.setText(arrayTP.get(6));
+        tv8.setText(arrayTP.get(7));
+        tv9.setText(arrayTP.get(8));
+        tv10.setText(arrayTP.get(9));
+        tv11.setText(arrayTP.get(10));
+        tv12.setText(arrayTP.get(11));
     }
 }

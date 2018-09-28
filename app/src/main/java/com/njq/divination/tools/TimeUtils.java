@@ -358,11 +358,21 @@ public class TimeUtils {
         }
         ind = ind % 5; // 五个为一周期
         int hourind = hourZ(hour);
-        if (hourind > 10)
-            return hourind - 10 + (ind - 1) * 2;
-        else {
+        if (hourind > 10){
+            int i = hourind - 10 + (ind - 1) * 2;
+            if(i<0){
+                return 10+i;
+            }
+            return i;
+        } else {
             hourind = hourind + (ind - 1) * 2;
-            return hourind >= 10 ? hourind - 10 : hourind;
+            if(hourind >= 10){
+                return hourind - 10;
+            }
+            if(hourind<0){
+                return 10+hourind;
+            }
+            return hourind;
         }
     }
 

@@ -7,6 +7,8 @@ import android.widget.Toast;
 
 import com.blankj.utilcode.util.AppUtils;
 
+import java.util.ArrayList;
+
 /**
  * 描述：工具类
  * 作者：钮家齐
@@ -28,7 +30,7 @@ public class Utils {
         }
         toast.show();
     }
-    static String[] Zhi = new String[]{"子", "丑", "寅", "卯", "辰", "巳", "午", "未", "申",
+    static String[] Zhi1 = new String[]{"子", "丑", "寅", "卯", "辰", "巳", "午", "未", "申",
             "酉", "戌", "亥"};
 
     /**
@@ -57,8 +59,8 @@ public class Utils {
      * @return
      */
     public static int getDZPos(String zi){
-        for (int i = 0;i<Zhi.length;i++){
-            if(Zhi[i].equals(zi)){
+        for (int i = 0;i<Zhi1.length;i++){
+            if(Zhi1[i].equals(zi)){
                 return i;
             }
         }
@@ -71,8 +73,8 @@ public class Utils {
      * @param y
      * @param h
      */
-    public static String[] getArrayTP(int y, int h){
-        String[] s = new String[]{"子", "丑", "寅", "卯", "辰", "巳", "午", "未", "申","酉", "戌", "亥"};
+    public static ArrayList<String> getArrayTP(int y, int h){
+        ArrayList<String> strings = new ArrayList<>();
 
         int w = 0;
         if(h>y){
@@ -80,14 +82,18 @@ public class Utils {
         }else if(h<y){
             w = 12-y+h;
         }
-
-        for (int i = 0;i<12;i++){
-            s[i] = Zhi[12-w-1];
-            w = w-1;
+        for (int i = 12-w;i<12;i++){
+            strings.add(Zhi1[i]);
         }
-        for (int i = 0;i<12;i++){
-            Log.e("排列天盘",s[i]);
+        Log.e("位移",""+w);
+        int p = 0;
+        for (int i = w;i<12;i++){
+            strings.add(Zhi1[p]);
+            p++;
         }
-        return s;
+        for (int i = 0;i<strings.size();i++){
+            Log.e("排列天盘::"+i,strings.get(i));
+        }
+        return strings;
     }
 }
