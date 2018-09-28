@@ -2,6 +2,7 @@ package com.njq.divination.tools;
 
 import android.app.Activity;
 import android.content.Context;
+import android.text.format.DateFormat;
 import android.util.Log;
 
 import com.blankj.utilcode.util.*;
@@ -429,5 +430,102 @@ public class TimeUtils {
         } finally {
             org.mozilla.javascript.Context.exit();
         }
+    }
+
+
+
+    public String getMonthWill(Date time){
+        SimpleDateFormat m = new SimpleDateFormat("MM");
+        SimpleDateFormat d = new SimpleDateFormat("dd");
+        String yue = m.format(time);
+        String tian = d.format(time);
+        int y = Integer.parseInt(yue);
+        int t = Integer.parseInt(tian);
+        String yj = getYJ(y, t);
+        return yj;
+    }
+
+    /**
+     * 获取月将
+     * @return
+     * @param y  月份
+     * @param t 日子
+     */
+    private String getYJ(int y, int t){
+        switch (y){
+            case 1:
+                if(20>t){
+                    return "冬至后   大吉   丑将占";
+                }else{
+                    return "大寒后   神后   子将占";
+                }
+            case 2:
+                if(19>t){
+                    return "大寒后   神后   子将占";
+                }else{
+                    return "雨水后   登明   亥将占";
+                }
+            case 3:
+                if(21>t){
+                    return "雨水后   登明   亥将占";
+                }else{
+                    return "春分后   河魁   戌将占";
+                }
+            case 4:
+                if(20>t){
+                    return "春分后   河魁   戌将占";
+                }else{
+                    return "谷雨后   从魁   酉将占";
+                }
+            case 5:
+                if(21>t){
+                    return "谷雨后   从魁   酉将占";
+                }else{
+                    return "小满后   传送   申将占";
+                }
+            case 6:
+                if(21>t){
+                    return "小满后   传送   申将占";
+                }else{
+                    return "夏至后   小吉   未将占";
+                }
+            case 7:
+                if(23>t){
+                    return "夏至后   小吉   未将占";
+                }else{
+                    return "大暑后   胜光   午将占";
+                }
+            case 8:
+                if(23>t){
+                    return "大暑后   胜光   午将占";
+                }else{
+                    return "处暑后   太乙   巳将占";
+                }
+            case 9:
+                if(23>t){
+                    return "处暑后   太乙   巳将占";
+                }else{
+                    return "秋分后   天罡   辰将占";
+                }
+            case 10:
+                if(23>t){
+                    return "秋分后   天罡   辰将占";
+                }else{
+                    return "霜降后   太冲   卯将占";
+                }
+            case 11:
+                if(22>t){
+                    return "霜降后   太冲   卯将占";
+                }else{
+                    return "小雪后   功曹   寅将占";
+                }
+            case 12:
+                if(22>t){
+                    return "小雪后   功曹   寅将占";
+                }else{
+                    return "冬至后   大吉   丑将占";
+                }
+        }
+        return "";
     }
 }
