@@ -1,12 +1,12 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 26
-    buildToolsVersion '27.0.3'
+    compileSdkVersion 25
+    buildToolsVersion '25.0.2'
     defaultConfig {
         applicationId "com.njq.divination"
         minSdkVersion 19
-        targetSdkVersion 26
+        targetSdkVersion 25
         versionCode 1
         versionName "1.0"
     }
@@ -20,7 +20,7 @@ android {
 
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
-    compile 'com.android.support:appcompat-v7:26.1.0'
+    compile 'com.android.support:appcompat-v7:25.2.0'
     compile 'com.jakewharton:butterknife:8.2.1'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.2.1'
     compile 'com.blankj:utilcode:1.20.3'
@@ -29,4 +29,5 @@ dependencies {
     compile 'com.google.code.gson:gson:2.8.0'
     compile 'com.readystatesoftware.chuck:library:1.0.4'
     implementation files('libs/rhino-1.7.9.jar')
+    implementation 'org.greenrobot:eventbus:3.1.1'
 }

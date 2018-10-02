@@ -2,6 +2,7 @@ package com.njq.divination.base;
 
 import android.app.Application;
 
+import com.blankj.utilcode.util.ServiceUtils;
 import com.blankj.utilcode.util.Utils;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.cache.CacheEntity;
@@ -10,6 +11,7 @@ import com.lzy.okgo.cookie.CookieJarImpl;
 import com.lzy.okgo.cookie.store.MemoryCookieStore;
 import com.njq.divination.R;
 import com.njq.divination.http.LoggingInterceptor;
+import com.njq.divination.server.LogService;
 
 import java.util.concurrent.TimeUnit;
 
