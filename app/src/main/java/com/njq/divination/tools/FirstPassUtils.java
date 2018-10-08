@@ -478,6 +478,586 @@ public class FirstPassUtils {
                                       boolean sk1, boolean sk2, boolean sk3, boolean sk4,
                                       String s1, String s2, String s3, String s4) {
 
+        if (!xk1&& !xk2 && !xk3 && !xk4 && !sk1 && !sk2 && !sk3 && !sk4){
+            ZBLog.e(" 四课中既没有下克上 也没有上克下\n");
+            String shuXing = Utils.getShuXing(MainActivity.s);
+            FirstPassBean firstPassBean = new FirstPassBean();
+            firstPassBean.fa = "遥制法";
+
+            boolean x1 = Utils.getXK(Utils.getShuXing(s1), shuXing);
+            boolean x2 = Utils.getXK(Utils.getShuXing(s2), shuXing);
+            boolean x3 = Utils.getXK(Utils.getShuXing(s3), shuXing);
+            boolean x4 = Utils.getXK(Utils.getShuXing(s4), shuXing);
+            if(x1 && !x2 && !x3 && !x4){
+                ZBLog.e("只有第一课中上神 "+s1+" 克日干 "+MainActivity.s+"   此课为：蒿矢课\n");
+                firstPassBean.CC = s1;
+                firstPassBean.ke = "蒿矢课";
+                return firstPassBean;
+            }
+            if(!x1 && x2 && !x3 && !x4){
+                ZBLog.e("只有第二课中上神 "+s2+" 克日干 "+MainActivity.s+"   此课为：蒿矢课\n");
+                firstPassBean.CC = s2;
+                firstPassBean.ke = "蒿矢课";
+                return firstPassBean;
+            }
+            if(!x1 && !x2 && x3 && !x4){
+                ZBLog.e("只有第三课中上神 "+s3+" 克日干 "+MainActivity.s+"   此课为：蒿矢课\n");
+                firstPassBean.CC = s3;
+                firstPassBean.ke = "蒿矢课";
+                return firstPassBean;
+            }
+            if(!x1 && !x2 && !x3 && x4){
+                ZBLog.e("只有第四课中上神 "+s4+" 克日干 "+MainActivity.s+"   此课为：蒿矢课\n");
+                firstPassBean.CC = s4;
+                firstPassBean.ke = "蒿矢课";
+                return firstPassBean;
+            }
+            if(x1 && x2 && x3 && x4){
+                ZBLog.e("四课中上神全部和日干 "+MainActivity.s+" 克\n");
+                String yy = Utils.getYY(MainActivity.s);
+                String yy1 = Utils.getYY(s1);
+                String yy2 = Utils.getYY(s2);
+                String yy3 = Utils.getYY(s3);
+                String yy4 = Utils.getYY(s4);
+                if(yy.equals(yy1) && !yy.equals(yy2) && !yy.equals(yy3) && !yy.equals(yy4)){
+                    ZBLog.e("只有第一课中上神 "+s1+" 与日干 "+MainActivity.s+" 相比用   此课为：蒿矢课\n");
+                    firstPassBean.CC = s1;
+                    firstPassBean.ke = "蒿矢课";
+                    return firstPassBean;
+                }
+                if(!yy.equals(yy1) && yy.equals(yy2) && !yy.equals(yy3) && !yy.equals(yy4)){
+                    ZBLog.e("只有第二课中上神 "+s2+" 与日干 "+MainActivity.s+" 相比用   此课为：蒿矢课\n");
+                    firstPassBean.CC = s2;
+                    firstPassBean.ke = "蒿矢课";
+                    return firstPassBean;
+                }
+                if(!yy.equals(yy1) && !yy.equals(yy2) && yy.equals(yy3) && !yy.equals(yy4)){
+                    ZBLog.e("只有第三课中上神 "+s3+" 与日干 "+MainActivity.s+" 相比用   此课为：蒿矢课\n");
+                    firstPassBean.CC = s3;
+                    firstPassBean.ke = "蒿矢课";
+                    return firstPassBean;
+                }
+                if(!yy.equals(yy1) && !yy.equals(yy2) && !yy.equals(yy3) && yy.equals(yy4)){
+                    ZBLog.e("只有第四课中上神 "+s4+" 与日干 "+MainActivity.s+" 相比用   此课为：蒿矢课\n");
+                    firstPassBean.CC = s4;
+                    firstPassBean.ke = "蒿矢课";
+                    return firstPassBean;
+                }
+                ZBLog.e("四课中上神 与日干相比用 数量大于等于2 或者没有一个与日干相比用  遥克法无法取初传\n");
+            }
+            if(x1 && x2 && x3 && !x4){
+                ZBLog.e("第一、二、三课中上神和日干 "+MainActivity.s+" 克\n");
+                String yy = Utils.getYY(MainActivity.s);
+                String yy1 = Utils.getYY(s1);
+                String yy2 = Utils.getYY(s2);
+                String yy3 = Utils.getYY(s3);
+                if(yy.equals(yy1) && !yy.equals(yy2) && !yy.equals(yy3)){
+                    ZBLog.e("只有第一课中上神 "+s1+" 与日干 "+MainActivity.s+" 相比用   此课为：蒿矢课\n");
+                    firstPassBean.CC = s1;
+                    firstPassBean.ke = "蒿矢课";
+                    return firstPassBean;
+                }
+                if(!yy.equals(yy1) && yy.equals(yy2) && !yy.equals(yy3)){
+                    ZBLog.e("只有第二课中上神 "+s2+" 与日干 "+MainActivity.s+" 相比用   此课为：蒿矢课\n");
+                    firstPassBean.CC = s2;
+                    firstPassBean.ke = "蒿矢课";
+                    return firstPassBean;
+                }
+                if(!yy.equals(yy1) && !yy.equals(yy2) && yy.equals(yy3)){
+                    ZBLog.e("只有第三课中上神 "+s3+" 与日干 "+MainActivity.s+" 相比用   此课为：蒿矢课\n");
+                    firstPassBean.CC = s3;
+                    firstPassBean.ke = "蒿矢课";
+                    return firstPassBean;
+                }
+                ZBLog.e("第一、二、三课中上神 与日干相比用 数量大于等于2 或者没有一个与日干相比用  遥克法无法取初传\n");
+            }
+            if(x1 && x2 && !x3 && x4){
+                ZBLog.e("第一、二、四课中上神和日干 "+MainActivity.s+" 克\n");
+                String yy = Utils.getYY(MainActivity.s);
+                String yy1 = Utils.getYY(s1);
+                String yy2 = Utils.getYY(s2);
+                String yy4 = Utils.getYY(s4);
+                if(yy.equals(yy1) && !yy.equals(yy2) && !yy.equals(yy4)){
+                    ZBLog.e("只有第一课中上神 "+s1+" 与日干 "+MainActivity.s+" 相比用   此课为：蒿矢课\n");
+                    firstPassBean.CC = s1;
+                    firstPassBean.ke = "蒿矢课";
+                    return firstPassBean;
+                }
+                if(!yy.equals(yy1) && yy.equals(yy2) && !yy.equals(yy4)){
+                    ZBLog.e("只有第二课中上神 "+s2+" 与日干 "+MainActivity.s+" 相比用   此课为：蒿矢课\n");
+                    firstPassBean.CC = s2;
+                    firstPassBean.ke = "蒿矢课";
+                    return firstPassBean;
+                }
+                if(!yy.equals(yy1) && !yy.equals(yy2) && yy.equals(yy4)){
+                    ZBLog.e("只有第四课中上神 "+s4+" 与日干 "+MainActivity.s+" 相比用   此课为：蒿矢课\n");
+                    firstPassBean.CC = s4;
+                    firstPassBean.ke = "蒿矢课";
+                    return firstPassBean;
+                }
+                ZBLog.e("第一、二、四课中上神 与日干相比用 数量大于等于2 或者没有一个与日干相比用  遥克法无法取初传\n");
+            }
+            if(x1 && !x2 && x3 && x4){
+                ZBLog.e("第一、三、四课中上神和日干 "+MainActivity.s+" 克\n");
+                String yy = Utils.getYY(MainActivity.s);
+                String yy1 = Utils.getYY(s1);
+                String yy3 = Utils.getYY(s3);
+                String yy4 = Utils.getYY(s4);
+                if(yy.equals(yy1) && !yy.equals(yy3) && !yy.equals(yy4)){
+                    ZBLog.e("只有第一课中上神 "+s1+" 与日干 "+MainActivity.s+" 相比用   此课为：蒿矢课\n");
+                    firstPassBean.CC = s1;
+                    firstPassBean.ke = "蒿矢课";
+                    return firstPassBean;
+                }
+                if(!yy.equals(yy1)  && yy.equals(yy3) && !yy.equals(yy4)){
+                    ZBLog.e("只有第三课中上神 "+s3+" 与日干 "+MainActivity.s+" 相比用   此课为：蒿矢课\n");
+                    firstPassBean.CC = s3;
+                    firstPassBean.ke = "蒿矢课";
+                    return firstPassBean;
+                }
+                if(!yy.equals(yy1)  && !yy.equals(yy3) && yy.equals(yy4)){
+                    ZBLog.e("只有第四课中上神 "+s4+" 与日干 "+MainActivity.s+" 相比用   此课为：蒿矢课\n");
+                    firstPassBean.CC = s4;
+                    firstPassBean.ke = "蒿矢课";
+                    return firstPassBean;
+                }
+                ZBLog.e("第一、三、四课中上神 与日干相比用 数量大于等于2 或者没有一个与日干相比用  遥克法无法取初传\n");
+            }
+            if(!x1 && x2 && x3 && x4){
+                ZBLog.e("第二、三、四课中上神全部和日干 "+MainActivity.s+" 克\n");
+                String yy = Utils.getYY(MainActivity.s);
+                String yy2 = Utils.getYY(s2);
+                String yy3 = Utils.getYY(s3);
+                String yy4 = Utils.getYY(s4);
+                if( yy.equals(yy2) && !yy.equals(yy3) && !yy.equals(yy4)){
+                    ZBLog.e("只有第二课中上神 "+s2+" 与日干 "+MainActivity.s+" 相比用   此课为：蒿矢课\n");
+                    firstPassBean.CC = s2;
+                    firstPassBean.ke = "蒿矢课";
+                    return firstPassBean;
+                }
+                if( !yy.equals(yy2) && yy.equals(yy3) && !yy.equals(yy4)){
+                    ZBLog.e("只有第三课中上神 "+s3+" 与日干 "+MainActivity.s+" 相比用   此课为：蒿矢课\n");
+                    firstPassBean.CC = s3;
+                    firstPassBean.ke = "蒿矢课";
+                    return firstPassBean;
+                }
+                if(!yy.equals(yy2) && !yy.equals(yy3) && yy.equals(yy4)){
+                    ZBLog.e("只有第四课中上神 "+s4+" 与日干 "+MainActivity.s+" 相比用   此课为：蒿矢课\n");
+                    firstPassBean.CC = s4;
+                    firstPassBean.ke = "蒿矢课";
+                    return firstPassBean;
+                }
+                ZBLog.e("第二、三、四课中上神 与日干相比用 数量大于等于2 或者没有一个与日干相比用  遥克法无法取初传\n");
+            }
+            if(x1 && x2 && !x3 && !x4){
+                ZBLog.e("第一、二课中上神和日干 "+MainActivity.s+" 克\n");
+                String yy = Utils.getYY(MainActivity.s);
+                String yy1 = Utils.getYY(s1);
+                String yy2 = Utils.getYY(s2);
+                if(yy.equals(yy1) && !yy.equals(yy2) ){
+                    ZBLog.e("只有第一课中上神 "+s1+" 与日干 "+MainActivity.s+" 相比用   此课为：蒿矢课\n");
+                    firstPassBean.CC = s1;
+                    firstPassBean.ke = "蒿矢课";
+                    return firstPassBean;
+                }
+                if(!yy.equals(yy1) && yy.equals(yy2)){
+                    ZBLog.e("只有第二课中上神 "+s2+" 与日干 "+MainActivity.s+" 相比用   此课为：蒿矢课\n");
+                    firstPassBean.CC = s2;
+                    firstPassBean.ke = "蒿矢课";
+                    return firstPassBean;
+                }
+                ZBLog.e("第一、二、课中上神 与日干相比用 数量大于等于2 或者没有一个与日干相比用  遥克法无法取初传\n");
+            }
+            if(x1 && !x2 && x3 && !x4){
+                ZBLog.e("第一、三课中上神和日干 "+MainActivity.s+" 克\n");
+                String yy = Utils.getYY(MainActivity.s);
+                String yy1 = Utils.getYY(s1);
+                String yy3 = Utils.getYY(s3);
+                if(yy.equals(yy1)&& !yy.equals(yy3)){
+                    ZBLog.e("只有第一课中上神 "+s1+" 与日干 "+MainActivity.s+" 相比用   此课为：蒿矢课\n");
+                    firstPassBean.CC = s1;
+                    firstPassBean.ke = "蒿矢课";
+                    return firstPassBean;
+                }
+                if(!yy.equals(yy1) && yy.equals(yy3)){
+                    ZBLog.e("只有第三课中上神 "+s3+" 与日干 "+MainActivity.s+" 相比用   此课为：蒿矢课\n");
+                    firstPassBean.CC = s3;
+                    firstPassBean.ke = "蒿矢课";
+                    return firstPassBean;
+                }
+                ZBLog.e("第一、三课中上神 与日干相比用 数量大于等于2 或者没有一个与日干相比用  遥克法无法取初传\n");
+            }
+            if(x1 && !x2 && !x3 && x4){
+                ZBLog.e("第一、四课中上神和日干 "+MainActivity.s+" 克\n");
+                String yy = Utils.getYY(MainActivity.s);
+                String yy1 = Utils.getYY(s1);
+                String yy4 = Utils.getYY(s4);
+                if(yy.equals(yy1) && !yy.equals(yy4)){
+                    ZBLog.e("只有第一课中上神 "+s1+" 与日干 "+MainActivity.s+" 相比用   此课为：蒿矢课\n");
+                    firstPassBean.CC = s1;
+                    firstPassBean.ke = "蒿矢课";
+                    return firstPassBean;
+                }
+                if(!yy.equals(yy1) && yy.equals(yy4)){
+                    ZBLog.e("只有第四课中上神 "+s4+" 与日干 "+MainActivity.s+" 相比用   此课为：蒿矢课\n");
+                    firstPassBean.CC = s4;
+                    firstPassBean.ke = "蒿矢课";
+                    return firstPassBean;
+                }
+                ZBLog.e("第一、四课中上神 与日干相比用 数量大于等于2 或者没有一个与日干相比用  遥克法无法取初传\n");
+            }
+            if(!x1 && x2 && x3 && !x4){
+                ZBLog.e("第二、三课中上神和日干 "+MainActivity.s+" 克\n");
+                String yy = Utils.getYY(MainActivity.s);
+                String yy2 = Utils.getYY(s2);
+                String yy3 = Utils.getYY(s3);
+                if(yy.equals(yy2) && !yy.equals(yy3)){
+                    ZBLog.e("只有第二课中上神 "+s2+" 与日干 "+MainActivity.s+" 相比用   此课为：蒿矢课\n");
+                    firstPassBean.CC = s2;
+                    firstPassBean.ke = "蒿矢课";
+                    return firstPassBean;
+                }
+                if(!yy.equals(yy2) && yy.equals(yy3)){
+                    ZBLog.e("只有第三课中上神 "+s3+" 与日干 "+MainActivity.s+" 相比用   此课为：蒿矢课\n");
+                    firstPassBean.CC = s3;
+                    firstPassBean.ke = "蒿矢课";
+                    return firstPassBean;
+                }
+                ZBLog.e("第二、三课中上神 与日干相比用 数量大于等于2 或者没有一个与日干相比用  遥克法无法取初传\n");
+            }
+            if(!x1 && x2 && !x3 && x4){
+                ZBLog.e("第二、四课中上神和日干 "+MainActivity.s+" 克\n");
+                String yy = Utils.getYY(MainActivity.s);
+                String yy2 = Utils.getYY(s2);
+                String yy4 = Utils.getYY(s4);
+                if(yy.equals(yy2) && !yy.equals(yy4)){
+                    ZBLog.e("只有第二课中上神 "+s2+" 与日干 "+MainActivity.s+" 相比用   此课为：蒿矢课\n");
+                    firstPassBean.CC = s2;
+                    firstPassBean.ke = "蒿矢课";
+                    return firstPassBean;
+                }
+                if(!yy.equals(yy2) && yy.equals(yy4)){
+                    ZBLog.e("只有第四课中上神 "+s4+" 与日干 "+MainActivity.s+" 相比用   此课为：蒿矢课\n");
+                    firstPassBean.CC = s4;
+                    firstPassBean.ke = "蒿矢课";
+                    return firstPassBean;
+                }
+                ZBLog.e("第二、四课中上神 与日干相比用 数量大于等于2 或者没有一个与日干相比用  遥克法无法取初传\n");
+            }
+            if(!x1 && !x2 && x3 && x4){
+                ZBLog.e("第三、四课中上神全部和日干 "+MainActivity.s+" 克\n");
+                String yy = Utils.getYY(MainActivity.s);
+                String yy3 = Utils.getYY(s3);
+                String yy4 = Utils.getYY(s4);
+                if(yy.equals(yy3) && !yy.equals(yy4)){
+                    ZBLog.e("只有第三课中上神 "+s3+" 与日干 "+MainActivity.s+" 相比用   此课为：蒿矢课\n");
+                    firstPassBean.CC = s3;
+                    firstPassBean.ke = "蒿矢课";
+                    return firstPassBean;
+                }
+                if(!yy.equals(yy3) && yy.equals(yy4)){
+                    ZBLog.e("只有第四课中上神 "+s4+" 与日干 "+MainActivity.s+" 相比用   此课为：蒿矢课\n");
+                    firstPassBean.CC = s4;
+                    firstPassBean.ke = "蒿矢课";
+                    return firstPassBean;
+                }
+                ZBLog.e("第三、四课中上神 与日干相比用 数量大于等于2 或者没有一个与日干相比用  遥克法无法取初传\n");
+            }
+            ZBLog.e("四课中无上神克日干\n");
+            boolean xs1 = Utils.getXK(shuXing, Utils.getShuXing(s1));
+            boolean xs2 = Utils.getXK(shuXing, Utils.getShuXing(s2));
+            boolean xs3 = Utils.getXK(shuXing, Utils.getShuXing(s3));
+            boolean xs4 = Utils.getXK(shuXing, Utils.getShuXing(s4));
+            if(xs1 && !xs2 && !xs3 && !xs4){
+                ZBLog.e("只有第一课中上神 "+s1+" 被日干 "+MainActivity.s+" 克    此课为：弹射课\n");
+                firstPassBean.CC = s1;
+                firstPassBean.ke = "弹射课";
+                return firstPassBean;
+            }
+            if(!xs1 && xs2 && !xs3 && !xs4){
+                ZBLog.e("只有第二课中上神 "+s2+" 被日干 "+MainActivity.s+" 克    此课为：弹射课\n");
+                firstPassBean.CC = s2;
+                firstPassBean.ke = "弹射课";
+                return firstPassBean;
+            }
+            if(!xs1 && !xs2 && xs3 && !xs4){
+                ZBLog.e("只有第三课中上神 "+s3+" 被日干 "+MainActivity.s+" 克    此课为：弹射课\n");
+                firstPassBean.CC = s3;
+                firstPassBean.ke = "弹射课";
+                return firstPassBean;
+            }
+            if(!xs1 && !xs2 && !xs3 && xs4){
+                ZBLog.e("只有第四课中上神 "+s4+" 被日干 "+MainActivity.s+" 克    此课为：弹射课\n");
+                firstPassBean.CC = s4;
+                firstPassBean.ke = "弹射课";
+                return firstPassBean;
+            }
+
+            if(xs1 && xs2 && xs3 && xs4){
+                ZBLog.e("四课中上神全部被日干 "+MainActivity.s+" 克\n");
+                String yy = Utils.getYY(MainActivity.s);
+                String yy1 = Utils.getYY(s1);
+                String yy2 = Utils.getYY(s2);
+                String yy3 = Utils.getYY(s3);
+                String yy4 = Utils.getYY(s4);
+                if(yy.equals(yy1) && !yy.equals(yy2) && !yy.equals(yy3) && !yy.equals(yy4)){
+                    ZBLog.e("只有第一课中上神 "+s1+" 与日干 "+MainActivity.s+" 相比用    此课为：弹射课\n");
+                    firstPassBean.CC = s1;
+                    firstPassBean.ke = "弹射课";
+                    return firstPassBean;
+                }
+                if(!yy.equals(yy1) && yy.equals(yy2) && !yy.equals(yy3) && !yy.equals(yy4)){
+                    ZBLog.e("只有第二课中上神 "+s2+" 与日干 "+MainActivity.s+" 相比用    此课为：弹射课\n");
+                    firstPassBean.CC = s2;
+                    firstPassBean.ke = "弹射课";
+                    return firstPassBean;
+                }
+                if(!yy.equals(yy1) && !yy.equals(yy2) && yy.equals(yy3) && !yy.equals(yy4)){
+                    ZBLog.e("只有第三课中上神 "+s3+" 与日干 "+MainActivity.s+" 相比用    此课为：弹射课\n");
+                    firstPassBean.CC = s3;
+                    firstPassBean.ke = "弹射课";
+                    return firstPassBean;
+                }
+                if(!yy.equals(yy1) && !yy.equals(yy2) && !yy.equals(yy3) && yy.equals(yy4)){
+                    ZBLog.e("只有第四课中上神 "+s4+" 与日干 "+MainActivity.s+" 相比用    此课为：弹射课\n");
+                    firstPassBean.CC = s4;
+                    firstPassBean.ke = "弹射课";
+                    return firstPassBean;
+                }
+                ZBLog.e("四课中上神 与日干相比用 数量大于等于2 或者没有一个与日干相比用  遥克法无法取初传\n");
+            }
+            if(xs1 && xs2 && xs3 && !xs4){
+                ZBLog.e("第一、二、三课中上神被日干 "+MainActivity.s+" 克\n");
+                String yy = Utils.getYY(MainActivity.s);
+                String yy1 = Utils.getYY(s1);
+                String yy2 = Utils.getYY(s2);
+                String yy3 = Utils.getYY(s3);
+                if(yy.equals(yy1) && !yy.equals(yy2) && !yy.equals(yy3)){
+                    ZBLog.e("只有第一课中上神 "+s1+" 与日干 "+MainActivity.s+" 相比用    此课为：弹射课\n");
+                    firstPassBean.CC = s1;
+                    firstPassBean.ke = "弹射课";
+                    return firstPassBean;
+                }
+                if(!yy.equals(yy1) && yy.equals(yy2) && !yy.equals(yy3)){
+                    ZBLog.e("只有第二课中上神 "+s2+" 与日干 "+MainActivity.s+" 相比用    此课为：弹射课\n");
+                    firstPassBean.CC = s2;
+                    firstPassBean.ke = "弹射课";
+                    return firstPassBean;
+                }
+                if(!yy.equals(yy1) && !yy.equals(yy2) && yy.equals(yy3)){
+                    ZBLog.e("只有第三课中上神 "+s3+" 与日干 "+MainActivity.s+" 相比用    此课为：弹射课\n");
+                    firstPassBean.CC = s3;
+                    firstPassBean.ke = "弹射课";
+                    return firstPassBean;
+                }
+                ZBLog.e("第一、二、三课中上神 与日干相比用 数量大于等于2 或者没有一个与日干相比用  遥克法无法取初传\n");
+            }
+            if(xs1 && xs2 && !xs3 && xs4){
+                ZBLog.e("第一、二、四课中上神被日干 "+MainActivity.s+" 克\n");
+                String yy = Utils.getYY(MainActivity.s);
+                String yy1 = Utils.getYY(s1);
+                String yy2 = Utils.getYY(s2);
+                String yy4 = Utils.getYY(s4);
+                if(yy.equals(yy1) && !yy.equals(yy2) && !yy.equals(yy4)){
+                    ZBLog.e("只有第一课中上神 "+s1+" 与日干 "+MainActivity.s+" 相比用    此课为：弹射课\n");
+                    firstPassBean.CC = s1;
+                    firstPassBean.ke = "弹射课";
+                    return firstPassBean;
+                }
+                if(!yy.equals(yy1) && yy.equals(yy2) && !yy.equals(yy4)){
+                    ZBLog.e("只有第二课中上神 "+s2+" 与日干 "+MainActivity.s+" 相比用    此课为：弹射课\n");
+                    firstPassBean.CC = s2;
+                    firstPassBean.ke = "弹射课";
+                    return firstPassBean;
+                }
+                if(!yy.equals(yy1) && !yy.equals(yy2) && yy.equals(yy4)){
+                    ZBLog.e("只有第四课中上神 "+s4+" 与日干 "+MainActivity.s+" 相比用    此课为：弹射课\n");
+                    firstPassBean.CC = s4;
+                    firstPassBean.ke = "弹射课";
+                    return firstPassBean;
+                }
+                ZBLog.e("第一、二、四课中上神 与日干相比用 数量大于等于2 或者没有一个与日干相比用  遥克法无法取初传\n");
+            }
+            if(xs1 && !xs2 && xs3 && xs4){
+                ZBLog.e("第一、三、四课中上神被日干 "+MainActivity.s+" 克\n");
+                String yy = Utils.getYY(MainActivity.s);
+                String yy1 = Utils.getYY(s1);
+                String yy3 = Utils.getYY(s3);
+                String yy4 = Utils.getYY(s4);
+                if(yy.equals(yy1) && !yy.equals(yy3) && !yy.equals(yy4)){
+                    ZBLog.e("只有第一课中上神 "+s1+" 与日干 "+MainActivity.s+" 相比用    此课为：弹射课\n");
+                    firstPassBean.CC = s1;
+                    firstPassBean.ke = "弹射课";
+                    return firstPassBean;
+                }
+                if(!yy.equals(yy1)  && yy.equals(yy3) && !yy.equals(yy4)){
+                    ZBLog.e("只有第三课中上神 "+s3+" 与日干 "+MainActivity.s+" 相比用    此课为：弹射课\n");
+                    firstPassBean.CC = s3;
+                    firstPassBean.ke = "弹射课";
+                    return firstPassBean;
+                }
+                if(!yy.equals(yy1)  && !yy.equals(yy3) && yy.equals(yy4)){
+                    ZBLog.e("只有第四课中上神 "+s4+" 与日干 "+MainActivity.s+" 相比用    此课为：弹射课\n");
+                    firstPassBean.CC = s4;
+                    firstPassBean.ke = "弹射课";
+                    return firstPassBean;
+                }
+                ZBLog.e("第一、三、四课中上神 与日干相比用 数量大于等于2 或者没有一个与日干相比用  遥克法无法取初传\n");
+            }
+            if(!xs1 && xs2 && xs3 && xs4){
+                ZBLog.e("第二、三、四课中上神全部被日干 "+MainActivity.s+" 克\n");
+                String yy = Utils.getYY(MainActivity.s);
+                String yy2 = Utils.getYY(s2);
+                String yy3 = Utils.getYY(s3);
+                String yy4 = Utils.getYY(s4);
+                if( yy.equals(yy2) && !yy.equals(yy3) && !yy.equals(yy4)){
+                    ZBLog.e("只有第二课中上神 "+s2+" 与日干 "+MainActivity.s+" 相比用    此课为：弹射课\n");
+                    firstPassBean.CC = s2;
+                    firstPassBean.ke = "弹射课";
+                    return firstPassBean;
+                }
+                if( !yy.equals(yy2) && yy.equals(yy3) && !yy.equals(yy4)){
+                    ZBLog.e("只有第三课中上神 "+s3+" 与日干 "+MainActivity.s+" 相比用    此课为：弹射课\n");
+                    firstPassBean.CC = s3;
+                    firstPassBean.ke = "弹射课";
+                    return firstPassBean;
+                }
+                if(!yy.equals(yy2) && !yy.equals(yy3) && yy.equals(yy4)){
+                    ZBLog.e("只有第四课中上神 "+s4+" 与日干 "+MainActivity.s+" 相比用    此课为：弹射课\n");
+                    firstPassBean.CC = s4;
+                    firstPassBean.ke = "弹射课";
+                    return firstPassBean;
+                }
+                ZBLog.e("第二、三、四课中上神 与日干相比用 数量大于等于2 或者没有一个与日干相比用  遥克法无法取初传\n");
+            }
+
+            if(xs1 && xs2 && !xs3 && !xs4){
+                ZBLog.e("第一、二课中上神被日干 "+MainActivity.s+" 克\n");
+                String yy = Utils.getYY(MainActivity.s);
+                String yy1 = Utils.getYY(s1);
+                String yy2 = Utils.getYY(s2);
+                if(yy.equals(yy1) && !yy.equals(yy2) ){
+                    ZBLog.e("只有第一课中上神 "+s1+" 与日干 "+MainActivity.s+" 相比用    此课为：弹射课\n");
+                    firstPassBean.CC = s1;
+                    firstPassBean.ke = "弹射课";
+                    return firstPassBean;
+                }
+                if(!yy.equals(yy1) && yy.equals(yy2)){
+                    ZBLog.e("只有第二课中上神 "+s2+" 与日干 "+MainActivity.s+" 相比用    此课为：弹射课\n");
+                    firstPassBean.CC = s2;
+                    firstPassBean.ke = "弹射课";
+                    return firstPassBean;
+                }
+                ZBLog.e("第一、二、课中上神 与日干相比用 数量大于等于2 或者没有一个与日干相比用  遥克法无法取初传\n");
+            }
+            if(xs1 && !xs2 && xs3 && !xs4){
+                ZBLog.e("第一、三课中上神被日干 "+MainActivity.s+" 克\n");
+                String yy = Utils.getYY(MainActivity.s);
+                String yy1 = Utils.getYY(s1);
+                String yy3 = Utils.getYY(s3);
+                if(yy.equals(yy1)&& !yy.equals(yy3)){
+                    ZBLog.e("只有第一课中上神 "+s1+" 与日干 "+MainActivity.s+" 相比用    此课为：弹射课\n");
+                    firstPassBean.CC = s1;
+                    firstPassBean.ke = "弹射课";
+                    return firstPassBean;
+                }
+                if(!yy.equals(yy1) && yy.equals(yy3)){
+                    ZBLog.e("只有第三课中上神 "+s3+" 与日干 "+MainActivity.s+" 相比用    此课为：弹射课\n");
+                    firstPassBean.CC = s3;
+                    firstPassBean.ke = "弹射课";
+                    return firstPassBean;
+                }
+                ZBLog.e("第一、三课中上神 与日干相比用 数量大于等于2 或者没有一个与日干相比用  遥克法无法取初传\n");
+            }
+            if(xs1 && !xs2 && !xs3 && xs4){
+                ZBLog.e("第一、四课中上神被日干 "+MainActivity.s+" 克\n");
+                String yy = Utils.getYY(MainActivity.s);
+                String yy1 = Utils.getYY(s1);
+                String yy4 = Utils.getYY(s4);
+                if(yy.equals(yy1) && !yy.equals(yy4)){
+                    ZBLog.e("只有第一课中上神 "+s1+" 与日干 "+MainActivity.s+" 相比用    此课为：弹射课\n");
+                    firstPassBean.CC = s1;
+                    firstPassBean.ke = "弹射课";
+                    return firstPassBean;
+                }
+                if(!yy.equals(yy1) && yy.equals(yy4)){
+                    ZBLog.e("只有第四课中上神 "+s4+" 与日干 "+MainActivity.s+" 相比用    此课为：弹射课\n");
+                    firstPassBean.CC = s4;
+                    firstPassBean.ke = "弹射课";
+                    return firstPassBean;
+                }
+                ZBLog.e("第一、四课中上神 与日干相比用 数量大于等于2 或者没有一个与日干相比用  遥克法无法取初传\n");
+            }
+            if(!xs1 && xs2 && xs3 && !xs4){
+                ZBLog.e("第二、三课中上神被日干 "+MainActivity.s+" 克\n");
+                String yy = Utils.getYY(MainActivity.s);
+                String yy2 = Utils.getYY(s2);
+                String yy3 = Utils.getYY(s3);
+                if(yy.equals(yy2) && !yy.equals(yy3)){
+                    ZBLog.e("只有第二课中上神 "+s2+" 与日干 "+MainActivity.s+" 相比用    此课为：弹射课\n");
+                    firstPassBean.CC = s2;
+                    firstPassBean.ke = "弹射课";
+                    return firstPassBean;
+                }
+                if(!yy.equals(yy2) && yy.equals(yy3)){
+                    ZBLog.e("只有第三课中上神 "+s3+" 与日干 "+MainActivity.s+" 相比用    此课为：弹射课\n");
+                    firstPassBean.CC = s3;
+                    firstPassBean.ke = "弹射课";
+                    return firstPassBean;
+                }
+                ZBLog.e("第二、三课中上神 与日干相比用 数量大于等于2 或者没有一个与日干相比用  遥克法无法取初传\n");
+            }
+            if(!xs1 && xs2 && !xs3 && xs4){
+                ZBLog.e("第二、四课中上神被日干 "+MainActivity.s+" 克\n");
+                String yy = Utils.getYY(MainActivity.s);
+                String yy2 = Utils.getYY(s2);
+                String yy4 = Utils.getYY(s4);
+                if(yy.equals(yy2) && !yy.equals(yy4)){
+                    ZBLog.e("只有第二课中上神 "+s2+" 与日干 "+MainActivity.s+" 相比用    此课为：弹射课\n");
+                    firstPassBean.CC = s2;
+                    firstPassBean.ke = "弹射课";
+                    return firstPassBean;
+                }
+                if(!yy.equals(yy2) && yy.equals(yy4)){
+                    ZBLog.e("只有第四课中上神 "+s4+" 与日干 "+MainActivity.s+" 相比用    此课为：弹射课\n");
+                    firstPassBean.CC = s4;
+                    firstPassBean.ke = "弹射课";
+                    return firstPassBean;
+                }
+                ZBLog.e("第二、四课中上神 与日干相比用 数量大于等于2 或者没有一个与日干相比用  遥克法无法取初传\n");
+            }
+            if(!xs1 && !xs2 && xs3 && xs4){
+                ZBLog.e("第三、四课中上神被日干 "+MainActivity.s+" 克\n");
+                String yy = Utils.getYY(MainActivity.s);
+                String yy3 = Utils.getYY(s3);
+                String yy4 = Utils.getYY(s4);
+                if(yy.equals(yy3) && !yy.equals(yy4)){
+                    ZBLog.e("只有第三课中上神 "+s3+" 与日干 "+MainActivity.s+" 相比用    此课为：弹射课\n");
+                    firstPassBean.CC = s3;
+                    firstPassBean.ke = "弹射课";
+                    return firstPassBean;
+                }
+                if(!yy.equals(yy3) && yy.equals(yy4)){
+                    ZBLog.e("只有第四课中上神 "+s4+" 与日干 "+MainActivity.s+" 相比用    此课为：弹射课\n");
+                    firstPassBean.CC = s4;
+                    firstPassBean.ke = "弹射课";
+                    return firstPassBean;
+                }
+                ZBLog.e("第三、四课中上神 与日干相比用 数量大于等于2 或者没有一个与日干相比用  遥克法无法取初传\n");
+            }
+        }
+
+        ZBLog.e("------遥克法未求得初传---\n\n");
+        return null;
+    }
+
+
+    /**
+     * 昂星法 求初传
+     */
+    public static FirstPassBean getAX(boolean xk1, boolean xk2, boolean xk3, boolean xk4,
+                                      boolean sk1, boolean sk2, boolean sk3, boolean sk4,
+                                      String s1, String s2, String s3, String s4) {
         return null;
     }
 

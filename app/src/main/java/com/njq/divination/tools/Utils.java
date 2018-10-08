@@ -183,9 +183,16 @@ public class Utils {
                 FirstPassBean sh = FirstPassUtils.getSH(xk1, xk2, xk3, xk4, sk1, sk2, sk3, sk4, s1, s2, s3, s4);    //涉害法求初传   如果为null  再用遥制法求
                 if(sh==null){
                     ZBLog.e("\n============遥制法求初传==========\n");
-                    FirstPassBean yz = FirstPassUtils.getYZ(xk1, xk2, xk3, xk4, sk1, sk2, sk3, sk4, s1, s2, s3, s4);    //遥制法求初传   如果为null  再用遥制法求
-                    ZBLog.e("遥制法 程序编写尚未完成   无法计算出结果");
-                    return null;
+                    FirstPassBean yz = FirstPassUtils.getYZ(xk1, xk2, xk3, xk4, sk1, sk2, sk3, sk4, s1, s2, s3, s4);    //遥制法求初传   如果为null  再用昂星法求
+                    if(yz==null){
+                        ZBLog.e("\n============昂星法求初传==========\n");
+                        FirstPassBean ax = FirstPassUtils.getAX(xk1, xk2, xk3, xk4, sk1, sk2, sk3, sk4, s1, s2, s3, s4);    //昂星法求初传   如果为null  再用别责法求
+                        if(ax==null){
+                            ZBLog.e("别责法 程序编写尚未完成   无法计算出结果");
+                            return yz;
+                        }
+                    }
+                    return yz;
                 }
                 return sh;
             }
