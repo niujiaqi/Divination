@@ -14,6 +14,7 @@ import com.blankj.utilcode.util.ServiceUtils;
 import com.njq.divination.bean.EvenBean;
 import com.njq.divination.bean.FirstPassBean;
 import com.njq.divination.server.LogService;
+import com.njq.divination.tools.FirstPassUtils;
 import com.njq.divination.tools.TimeUtils;
 import com.njq.divination.tools.Utils;
 import com.njq.divination.tools.ZBLog;
@@ -106,7 +107,7 @@ public class MainActivity extends AppCompatActivity {
     private String monthWill1;
     private String monthWill;
     private String h;
-    private String s1;
+    public static String s1;
     private String k1;
     private String k2;
     private String k3;
@@ -215,15 +216,29 @@ public class MainActivity extends AppCompatActivity {
         }else{
             chu = cc.CC;
         }
-        String zhong = arrayTP.get(Utils.getDZPos(chu));
-        String mo = arrayTP.get(Utils.getDZPos(zhong));
-        tvChu.setText(chu);
-        tvZhong.setText(zhong);
-        tvMo.setText(mo);
-        ZBLog.e("\n=========得出三传========\n" +
-                "   初传："+chu+"\n" +
-                "   中传："+zhong+"\n" +
-                "   末传："+mo+"\n");
+        if(cc!=null&&cc.fa.equals("昂星法")){
+            Utils.setSC(tvZhong,tvMo);
+            ZBLog.e("\n=========得出三传========\n" +
+                    "   初传："+chu+"\n" +
+                    "   中传："+tvZhong.getText().toString()+"\n" +
+                    "   末传："+tvMo.getText().toString()+"\n");
+        }else if(cc!=null&&cc.fa.equals("别责法")){
+            Utils.setBZ(tvZhong,tvMo);
+            ZBLog.e("\n=========得出三传========\n" +
+                    "   初传："+chu+"\n" +
+                    "   中传："+tvZhong.getText().toString()+"\n" +
+                    "   末传："+tvMo.getText().toString()+"\n");
+        }else{
+            String zhong = arrayTP.get(Utils.getDZPos(chu));
+            String mo = arrayTP.get(Utils.getDZPos(zhong));
+            tvChu.setText(chu);
+            tvZhong.setText(zhong);
+            tvMo.setText(mo);
+            ZBLog.e("\n=========得出三传========\n" +
+                    "   初传："+chu+"\n" +
+                    "   中传："+zhong+"\n" +
+                    "   末传："+mo+"\n");
+        }
     }
 
     @Subscribe

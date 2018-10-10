@@ -1058,7 +1058,131 @@ public class FirstPassUtils {
     public static FirstPassBean getAX(boolean xk1, boolean xk2, boolean xk3, boolean xk4,
                                       boolean sk1, boolean sk2, boolean sk3, boolean sk4,
                                       String s1, String s2, String s3, String s4) {
+
+        if(!xk1&& !xk2 && !xk3 && !xk4 && !sk1 && !sk2 && !sk3 && !sk4){
+            FirstPassBean firstPassBean = new FirstPassBean();
+            firstPassBean.fa = "昂星法";
+            firstPassBean.CC = "";
+
+            String yy = Utils.getYY(MainActivity.s);
+            ZBLog.e(" 日干："+MainActivity.s+"    属："+yy);
+            ZBLog.e(" 四课中既无下克上，又无上克下；既无“神遥克日” 又无 “日遥克神”");
+            if(yy.equals("阳")){
+                for (int q = 0;q<MainActivity.arrayTP.size();q++){
+                    if(Utils.Zhi1[q].equals("酉")){
+                        String s = MainActivity.arrayTP.get(q);
+                        firstPassBean.CC = s;
+                        ZBLog.e("地盘酉所加天盘之支为："+s+"  故初传为："+s+"\n");
+                        return firstPassBean;
+                    }
+                }
+            }
+            if(yy.equals("阴")){
+                for (int q = 0;q<Utils.Zhi1.length;q++){
+                    if(MainActivity.arrayTP.get(q).equals("酉")){
+                        String s = Utils.Zhi1[q];
+                        firstPassBean.CC = s;
+                        ZBLog.e("天盘酉所加地盘之支为："+s+"  故初传为："+s+"\n");
+                        return firstPassBean;
+                    }
+                }
+            }
+        }
+        ZBLog.e("------昂星法未求得初传---\n\n");
         return null;
+    }
+
+
+    /**
+     * 别责法 求初传
+     */
+    public static FirstPassBean getBZ(boolean xk1, boolean xk2, boolean xk3, boolean xk4,
+                                      boolean sk1, boolean sk2, boolean sk3, boolean sk4,
+                                      String s1, String s2, String s3, String s4,
+                                      String x1, String x2, String x3, String x4) {
+
+        if(!xk1&& !xk2 && !xk3 && !xk4 && !sk1 && !sk2 && !sk3 && !sk4){
+            FirstPassBean firstPassBean = new FirstPassBean();
+            firstPassBean.fa = "别责法";
+            firstPassBean.CC = "";
+            String yy = Utils.getYY(MainActivity.s);
+            ZBLog.e(" 日干："+MainActivity.s+"    属："+yy);
+            if(s1.equals(s2)&& !s1.equals(s3)&& !s1.equals(s4)){
+                if(Utils.getShuXing(x1).equals(Utils.getShuXing(x2))){
+                    ZBLog.e("一、二课相等，实际只有三课，并且三课均无克");
+                    String bzcc = getBZCC(yy);
+                    firstPassBean.CC = bzcc;
+                    return firstPassBean;
+                }
+            }
+            if(s1.equals(s3)&& !s1.equals(s2)&& !s1.equals(s4)){
+                if(Utils.getShuXing(x1).equals(Utils.getShuXing(x3))){
+                    ZBLog.e("一、三课相等，实际只有三课，并且三课均无克");
+                    String bzcc = getBZCC(yy);
+                    firstPassBean.CC = bzcc;
+                    return firstPassBean;
+                }
+            }
+            if(s1.equals(s4)&& !s1.equals(s2)&& !s1.equals(s3)){
+                if(Utils.getShuXing(x1).equals(Utils.getShuXing(x4))){
+                    ZBLog.e("一、四课相等，实际只有三课，并且三课均无克");
+                    String bzcc = getBZCC(yy);
+                    firstPassBean.CC = bzcc;
+                    return firstPassBean;
+                }
+            }
+            if(s2.equals(s3)&&!s1.equals(s4)){
+                if(Utils.getShuXing(x2).equals(Utils.getShuXing(x3))){
+                    ZBLog.e("二、三课相等，实际只有三课，并且三课均无克");
+                    String bzcc = getBZCC(yy);
+                    firstPassBean.CC = bzcc;
+                    return firstPassBean;
+                }
+            }
+            if(s2.equals(s4)&&!s1.equals(s3)){
+                if(Utils.getShuXing(x2).equals(Utils.getShuXing(x4))){
+                    ZBLog.e("二、四课相等，实际只有三课，并且三课均无克");
+                    String bzcc = getBZCC(yy);
+                    firstPassBean.CC = bzcc;
+                    return firstPassBean;
+                }
+            }
+            if(s3.equals(s4)&&!s1.equals(s2)){
+                if(Utils.getShuXing(x3).equals(Utils.getShuXing(x4))){
+                    ZBLog.e("三、四课相等，实际只有三课，并且三课均无克");
+                    String bzcc = getBZCC(yy);
+                    firstPassBean.CC = bzcc;
+                    return firstPassBean;
+                }
+            }
+        }
+        ZBLog.e("------别责法未求得初传---\n\n");
+        return null;
+    }
+
+    public static String getBZCC(String yy){
+        if(yy.equals("阳")){
+            String tgh = Utils.getTGH(MainActivity.s);
+            String jg = Utils.getJG(tgh);
+            String s = MainActivity.arrayTP.get(Utils.getDZPos(jg));
+            ZBLog.e("阳日取日干："+MainActivity.s+"  的合神："+tgh+"  寄宫于："+jg+"  地盘："+jg+"  对应天盘："+s+"  故取初传为："+s);
+            return s;
+        }
+        if(yy.equals("阴")){
+            ArrayList<String> shqt = Utils.getSHQT(MainActivity.s1);
+            ArrayList<String> arrayBZ = Utils.getArrayBZ(MainActivity.s1, MainActivity.arrayTP);
+            for (int i = 0;i<arrayBZ.size();i++){
+                if(arrayBZ.get(i).equals(shqt.get(0))){
+                    ZBLog.e("阴日取日支："+MainActivity.s1+"  的三合神前一位："+shqt.get(0)+"  故取初传为："+shqt.get(0));
+                    return shqt.get(0);
+                }
+                if(arrayBZ.get(i).equals(shqt.get(1))){
+                    ZBLog.e("阴日取日支："+MainActivity.s1+"  的三合神前一位："+shqt.get(1)+"  故取初传为："+shqt.get(1));
+                    return shqt.get(1);
+                }
+            }
+        }
+        return "";
     }
 
     private static String getBYH(String yy, ArrayList<String> strings) {
@@ -1306,6 +1430,7 @@ public class FirstPassUtils {
         jkBean.jike = i;
         return jkBean;
     }
+
 
     static class Student implements Comparator<JKBean> {
 

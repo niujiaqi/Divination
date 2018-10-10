@@ -1,8 +1,10 @@
 package com.njq.divination.tools;
 
 import android.util.Log;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.njq.divination.MainActivity;
 import com.njq.divination.bean.FJGBean;
 import com.njq.divination.bean.FirstPassBean;
 
@@ -65,6 +67,19 @@ public class Utils {
         }
         return 0;
     }
+//    /**
+//     * 获取 天盘之支
+//     * @param zi
+//     * @return
+//     */
+//    public static String getTPPos(String zi,ArrayList<String> list){
+//        for (int i = 0;i<Zhi1.length;i++){
+//            if(Zhi1[i].equals(zi)){
+//                return i;
+//            }
+//        }
+//        return 0;
+//    }
 
 
     /**
@@ -93,6 +108,25 @@ public class Utils {
         }
 //        for (int i = 0;i<strings.size();i++){
 //            Log.e("排列天盘::"+i,strings.get(i));
+//        }
+        return strings;
+    }
+    /**
+     * 获取别责法 重新排列的集合
+     * @return
+     */
+    public static ArrayList<String> getArrayBZ(String s, ArrayList<String> list){
+        ArrayList<String> strings = new ArrayList<>();
+        int dzPos = getDZPos(s);
+
+        for (int i = dzPos;i<12;i++){
+            strings.add(list.get(i));
+        }
+        for (int i = 0;i<dzPos;i++){
+            strings.add(list.get(i));
+        }
+//        for (int i = 0;i<strings.size();i++){
+//            Log.e("重新排列的集合::"+i,strings.get(i));
 //        }
         return strings;
     }
@@ -188,7 +222,11 @@ public class Utils {
                         ZBLog.e("\n============昂星法求初传==========\n");
                         FirstPassBean ax = FirstPassUtils.getAX(xk1, xk2, xk3, xk4, sk1, sk2, sk3, sk4, s1, s2, s3, s4);    //昂星法求初传   如果为null  再用别责法求
                         if(ax==null){
-                            ZBLog.e("别责法 程序编写尚未完成   无法计算出结果");
+                            ZBLog.e("\n============别责法求初传==========\n");
+                            FirstPassBean bz = FirstPassUtils.getBZ(xk1, xk2, xk3, xk4, sk1, sk2, sk3, sk4, s1, s2, s3, s4, x1,  x2,  x3,  x4);    //别责法求初传   如果为null  再用八专注求
+                            if(bz==null){
+                                ZBLog.e("八专注 程序编写尚未完成   无法计算出结果");
+                            }
                             return yz;
                         }
                     }
@@ -322,6 +360,99 @@ public class Utils {
     }
 
     /**
+     * 取天干合神
+     */
+    public static String getTGH(String s){
+        if(s.equals("甲")){
+            return "己";
+        }
+        if(s.equals("乙")){
+            return "庚";
+        }
+        if(s.equals("丙")){
+            return "辛";
+        }
+        if(s.equals("丁")){
+            return "壬";
+        }
+        if(s.equals("戊")){
+            return "癸";
+        }
+        if(s.equals("己")){
+            return "甲";
+        }
+        if(s.equals("庚")){
+            return "乙";
+        }
+        if(s.equals("辛")){
+            return "丙";
+        }
+        if(s.equals("壬")){
+            return "丁";
+        }
+        if(s.equals("癸")){
+            return "戊";
+        }
+        return "";
+    }
+
+    /**
+     * 取三合其他两位
+     */
+    public static ArrayList<String> getSHQT(String s){
+        ArrayList<String> strings = new ArrayList<>();
+        if(s.equals("子")){
+            strings.add("申");
+            strings.add("辰");
+        }
+        if(s.equals("丑")){
+            strings.add("巳");
+            strings.add("酉");
+        }
+        if(s.equals("寅")){
+            strings.add("午");
+            strings.add("戌");
+        }
+        if(s.equals("卯")){
+            strings.add("亥");
+            strings.add("未");
+        }
+        if(s.equals("辰")){
+            strings.add("子");
+            strings.add("申");
+        }
+        if(s.equals("巳")){
+            strings.add("丑");
+            strings.add("酉");
+        }
+        if(s.equals("午")){
+            strings.add("寅");
+            strings.add("戌");
+        }
+        if(s.equals("未")){
+            strings.add("卯");
+            strings.add("亥");
+        }
+        if(s.equals("申")){
+            strings.add("子");
+            strings.add("辰");
+        }
+        if(s.equals("酉")){
+            strings.add("巳");
+            strings.add("丑");
+        }
+        if(s.equals("戌")){
+            strings.add("寅");
+            strings.add("午");
+        }
+        if(s.equals("亥")){
+            strings.add("卯");
+            strings.add("未");
+        }
+        return strings;
+    }
+
+    /**
      * 从 孟 仲 季 中取初传
      * @param s
      * @return
@@ -352,5 +483,51 @@ public class Utils {
             }
         }
         return "";
+    }
+
+    public static void setSC(TextView tvZhong, TextView tvMo) {
+        String yy = Utils.getYY(MainActivity.s);
+        if(yy.equals("阳")){
+            for (int q = 0;q<MainActivity.arrayTP.size();q++){
+                if(Utils.Zhi1[q].equals(MainActivity.s1)){
+                    String s = MainActivity.arrayTP.get(q);
+                    ZBLog.e("阳日取日支   地盘："+MainActivity.s1+"  所加天盘之支为："+s+"  故中传为："+s+"\n");
+                    tvZhong.setText(s);
+                }
+            }
+            String jg = getJG(MainActivity.s);
+            for (int q = 0;q<MainActivity.arrayTP.size();q++){
+                if(Utils.Zhi1[q].equals(jg)){
+                    String s = MainActivity.arrayTP.get(q);
+                    ZBLog.e("日干："+MainActivity.s+" 寄宫于："+jg+"   地盘："+jg+"  所加天盘之支为："+s+"  故末传为："+s+"\n");
+                    tvMo.setText(s);
+                }
+            }
+        }
+        if(yy.equals("阴")){
+            String jg = getJG(MainActivity.s);
+            for (int q = 0;q<MainActivity.arrayTP.size();q++){
+                if(Utils.Zhi1[q].equals(jg)){
+                    String s = MainActivity.arrayTP.get(q);
+                    ZBLog.e("阴日日干："+MainActivity.s+" 寄宫于："+jg+"   地盘："+jg+"  所加天盘之支为："+s+"  故中传为："+s+"\n");
+                    tvZhong.setText(s);
+                }
+            }
+            for (int q = 0;q<MainActivity.arrayTP.size();q++){
+                if(Utils.Zhi1[q].equals(MainActivity.s1)){
+                    String s = MainActivity.arrayTP.get(q);
+                    ZBLog.e("日支   地盘："+MainActivity.s1+"  所加天盘之支为："+s+"  故末传为："+s+"\n");
+                    tvMo.setText(s);
+                }
+            }
+        }
+    }
+
+    public static void setBZ(TextView tvZhong, TextView tvMo) {
+        String jg = getJG(MainActivity.s);
+        String s = MainActivity.arrayTP.get(getDZPos(jg));
+        ZBLog.e("日干："+MainActivity.s+" 寄宫于："+jg+"   地盘："+jg+"  所加天盘之支为："+s+"  故中传、末传为："+s+"\n");
+        tvZhong.setText(s);
+        tvMo.setText(s);
     }
 }
