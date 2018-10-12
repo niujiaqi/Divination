@@ -225,7 +225,12 @@ public class Utils {
                             ZBLog.e("\n============别责法求初传==========\n");
                             FirstPassBean bz = FirstPassUtils.getBZ(xk1, xk2, xk3, xk4, sk1, sk2, sk3, sk4, s1, s2, s3, s4, x1,  x2,  x3,  x4);    //别责法求初传   如果为null  再用八专注求
                             if(bz==null){
-                                ZBLog.e("八专注 程序编写尚未完成   无法计算出结果");
+                                FirstPassBean baz = FirstPassUtils.getBAZ(xk1, xk2, xk3, xk4, sk1, sk2, sk3, sk4, s1, s2, s3, s4, x1,  x2,  x3,  x4);    //八专注求初传   如果为null  再用优吟法求
+                                if(baz==null){
+
+                                    ZBLog.e("八专注 程序编写尚未完成   无法计算出结果");
+                                }
+                                return baz;
                             }
                             return yz;
                         }
@@ -524,6 +529,14 @@ public class Utils {
     }
 
     public static void setBZ(TextView tvZhong, TextView tvMo) {
+        String jg = getJG(MainActivity.s);
+        String s = MainActivity.arrayTP.get(getDZPos(jg));
+        ZBLog.e("日干："+MainActivity.s+" 寄宫于："+jg+"   地盘："+jg+"  所加天盘之支为："+s+"  故中传、末传为："+s+"\n");
+        tvZhong.setText(s);
+        tvMo.setText(s);
+    }
+
+    public static void setBAZ(TextView tvZhong, TextView tvMo) {
         String jg = getJG(MainActivity.s);
         String s = MainActivity.arrayTP.get(getDZPos(jg));
         ZBLog.e("日干："+MainActivity.s+" 寄宫于："+jg+"   地盘："+jg+"  所加天盘之支为："+s+"  故中传、末传为："+s+"\n");

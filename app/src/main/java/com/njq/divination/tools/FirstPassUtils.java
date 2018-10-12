@@ -1107,7 +1107,9 @@ public class FirstPassUtils {
             firstPassBean.CC = "";
             String yy = Utils.getYY(MainActivity.s);
             ZBLog.e(" 日干："+MainActivity.s+"    属："+yy);
-            if(s1.equals(s2)&& !s1.equals(s3)&& !s1.equals(s4)){
+            if((s1.equals(s2)&& !s1.equals(s3)&& !s1.equals(s4))||(Utils.getShuXing(s1).equals(Utils.getShuXing(s2))&&
+                    !Utils.getShuXing(s1).equals(Utils.getShuXing(s3))&& !Utils.getShuXing(s1).equals(Utils.getShuXing(s4))&&
+                    !Utils.getShuXing(s3).equals(Utils.getShuXing(s4)))){
                 if(Utils.getShuXing(x1).equals(Utils.getShuXing(x2))){
                     ZBLog.e("一、二课相等，实际只有三课，并且三课均无克");
                     String bzcc = getBZCC(yy);
@@ -1115,7 +1117,9 @@ public class FirstPassUtils {
                     return firstPassBean;
                 }
             }
-            if(s1.equals(s3)&& !s1.equals(s2)&& !s1.equals(s4)){
+            if((s1.equals(s3)&& !s1.equals(s2)&& !s1.equals(s4))||(Utils.getShuXing(s1).equals(Utils.getShuXing(s3))&&
+                    !Utils.getShuXing(s1).equals(Utils.getShuXing(s2))&& !Utils.getShuXing(s1).equals(Utils.getShuXing(s4))&&
+                    !Utils.getShuXing(s2).equals(Utils.getShuXing(s4)))){
                 if(Utils.getShuXing(x1).equals(Utils.getShuXing(x3))){
                     ZBLog.e("一、三课相等，实际只有三课，并且三课均无克");
                     String bzcc = getBZCC(yy);
@@ -1123,7 +1127,9 @@ public class FirstPassUtils {
                     return firstPassBean;
                 }
             }
-            if(s1.equals(s4)&& !s1.equals(s2)&& !s1.equals(s3)){
+            if((s1.equals(s4)&& !s1.equals(s2)&& !s1.equals(s3))||(Utils.getShuXing(s1).equals(Utils.getShuXing(s4))&&
+                    !Utils.getShuXing(s1).equals(Utils.getShuXing(s2))&& !Utils.getShuXing(s1).equals(Utils.getShuXing(s3))&&
+                    !Utils.getShuXing(s2).equals(Utils.getShuXing(s3)))){
                 if(Utils.getShuXing(x1).equals(Utils.getShuXing(x4))){
                     ZBLog.e("一、四课相等，实际只有三课，并且三课均无克");
                     String bzcc = getBZCC(yy);
@@ -1131,7 +1137,8 @@ public class FirstPassUtils {
                     return firstPassBean;
                 }
             }
-            if(s2.equals(s3)&&!s1.equals(s4)){
+            if((s2.equals(s3)&&!s1.equals(s4))||(Utils.getShuXing(s2).equals(Utils.getShuXing(s3))&&
+                    !Utils.getShuXing(s1).equals(Utils.getShuXing(s4)))){
                 if(Utils.getShuXing(x2).equals(Utils.getShuXing(x3))){
                     ZBLog.e("二、三课相等，实际只有三课，并且三课均无克");
                     String bzcc = getBZCC(yy);
@@ -1139,7 +1146,8 @@ public class FirstPassUtils {
                     return firstPassBean;
                 }
             }
-            if(s2.equals(s4)&&!s1.equals(s3)){
+            if((s2.equals(s4)&&!s1.equals(s3))||(Utils.getShuXing(s2).equals(Utils.getShuXing(s3))&&
+                    !Utils.getShuXing(s1).equals(Utils.getShuXing(s3)))){
                 if(Utils.getShuXing(x2).equals(Utils.getShuXing(x4))){
                     ZBLog.e("二、四课相等，实际只有三课，并且三课均无克");
                     String bzcc = getBZCC(yy);
@@ -1147,7 +1155,8 @@ public class FirstPassUtils {
                     return firstPassBean;
                 }
             }
-            if(s3.equals(s4)&&!s1.equals(s2)){
+            if((s3.equals(s4)&&!s1.equals(s2))||(Utils.getShuXing(s3).equals(Utils.getShuXing(s4))&&
+                    !Utils.getShuXing(s1).equals(Utils.getShuXing(s2)))){
                 if(Utils.getShuXing(x3).equals(Utils.getShuXing(x4))){
                     ZBLog.e("三、四课相等，实际只有三课，并且三课均无克");
                     String bzcc = getBZCC(yy);
@@ -1158,6 +1167,116 @@ public class FirstPassUtils {
         }
         ZBLog.e("------别责法未求得初传---\n\n");
         return null;
+    }
+
+
+    /**
+     * 八专注 求初传
+     */
+    public static FirstPassBean getBAZ(boolean xk1, boolean xk2, boolean xk3, boolean xk4,
+                                       boolean sk1, boolean sk2, boolean sk3, boolean sk4,
+                                       String s1, String s2, String s3, String s4,
+                                       String x1, String x2, String x3, String x4) {
+        if(!xk1&& !xk2 && !xk3 && !xk4 && !sk1 && !sk2 && !sk3 && !sk4){
+            FirstPassBean firstPassBean = new FirstPassBean();
+            firstPassBean.fa = "八专注";
+            firstPassBean.CC = "";
+            String yy = Utils.getYY(MainActivity.s);
+            ZBLog.e(" 日干："+MainActivity.s+"    属："+yy);
+            if((s1.equals(s2)&& s3.equals(s4))||(Utils.getShuXing(s1).equals(Utils.getShuXing(s2))&&
+                    Utils.getShuXing(s3).equals(Utils.getShuXing(s4)))){
+                if(Utils.getShuXing(x1).equals(Utils.getShuXing(x2))&&Utils.getShuXing(x3).equals(Utils.getShuXing(x4))){
+                    ZBLog.e("一、二课相等，三、四课相等，实际只有两课，并且两课均无克");
+                    String bzcc = getBAZCC(yy);
+                    firstPassBean.CC = bzcc;
+                    return firstPassBean;
+                }
+            }
+            if((s1.equals(s3)&& s2.equals(s4))||(Utils.getShuXing(s1).equals(Utils.getShuXing(s3))&&
+                    Utils.getShuXing(s2).equals(Utils.getShuXing(s4)))){
+                if(Utils.getShuXing(x1).equals(Utils.getShuXing(x3))&&Utils.getShuXing(x2).equals(Utils.getShuXing(x4))){
+                    ZBLog.e("一、三课相等，二、四课相等，实际只有两课，并且两课均无克");
+                    String bzcc = getBAZCC(yy);
+                    firstPassBean.CC = bzcc;
+                    return firstPassBean;
+                }
+            }
+            if((s1.equals(s4)&& s2.equals(s3))||(Utils.getShuXing(s1).equals(Utils.getShuXing(s4))&&
+                    Utils.getShuXing(s2).equals(Utils.getShuXing(s3)))){
+                if(Utils.getShuXing(x1).equals(Utils.getShuXing(x4))&&Utils.getShuXing(x2).equals(Utils.getShuXing(x3))){
+                    ZBLog.e("一、四课相等，二、三课相等，实际只有两课，并且两课均无克");
+                    String bzcc = getBAZCC(yy);
+                    firstPassBean.CC = bzcc;
+                    return firstPassBean;
+                }
+            }
+
+            if((s1.equals(s2)&& s1.equals(s3))||(Utils.getShuXing(s1).equals(Utils.getShuXing(s2))&&
+                    Utils.getShuXing(s1).equals(Utils.getShuXing(s3)))){
+                if(Utils.getShuXing(x1).equals(Utils.getShuXing(x2))&&Utils.getShuXing(x1).equals(Utils.getShuXing(x3))){
+                    ZBLog.e("一、二、三课相等，实际只有两课，并且两课均无克");
+                    String bzcc = getBAZCC(yy);
+                    firstPassBean.CC = bzcc;
+                    return firstPassBean;
+                }
+            }
+
+            if((s1.equals(s3)&& s1.equals(s4))||(Utils.getShuXing(s1).equals(Utils.getShuXing(s3))&&
+                    Utils.getShuXing(s1).equals(Utils.getShuXing(s4)))){
+                if(Utils.getShuXing(x1).equals(Utils.getShuXing(x3))&&Utils.getShuXing(x1).equals(Utils.getShuXing(x4))){
+                    ZBLog.e("一、三、四课相等，实际只有两课，并且两课均无克");
+                    String bzcc = getBAZCC(yy);
+                    firstPassBean.CC = bzcc;
+                    return firstPassBean;
+                }
+            }
+            if((s2.equals(s3)&& s2.equals(s4))||(Utils.getShuXing(s2).equals(Utils.getShuXing(s3))&&
+                    Utils.getShuXing(s2).equals(Utils.getShuXing(s4)))){
+                if(Utils.getShuXing(x2).equals(Utils.getShuXing(x3))&&Utils.getShuXing(x2).equals(Utils.getShuXing(x4))){
+                    ZBLog.e("二、三、四课相等，实际只有两课，并且两课均无克");
+                    String bzcc = getBAZCC(yy);
+                    firstPassBean.CC = bzcc;
+                    return firstPassBean;
+                }
+            }
+        }
+        ZBLog.e("------八专注未求得初传---\n\n");
+        return null;
+    }
+
+    public static String getBAZCC(String yy){
+        if(yy.equals("阳")){
+            String jg = Utils.getJG(MainActivity.s);
+            int dzPos = Utils.getDZPos(jg);
+            String s = "";
+            if(dzPos<=9){
+                s = MainActivity.arrayTP.get(dzPos+2);
+            }else if(dzPos==10){
+                s = MainActivity.arrayTP.get(0);
+            }else if(dzPos==11){
+                s = MainActivity.arrayTP.get(1);
+            }
+            ZBLog.e("阳日取日干："+MainActivity.s+"  的寄宫："+jg+"  地盘："+jg+"  对应天盘："+
+                    MainActivity.arrayTP.get(dzPos)+"  顺数三位，故取："+s+"  为初传");
+            return s;
+        }
+        if(yy.equals("阴")){
+            String jg = Utils.getJG(MainActivity.s);
+            int dzPos = Utils.getDZPos(jg);
+            String s = "";
+            if(dzPos>=2){
+                s = MainActivity.arrayTP.get(dzPos - 2);
+            }else if(dzPos==1){
+                s = MainActivity.arrayTP.get(11);
+            }else if(dzPos==0){
+                s = MainActivity.arrayTP.get(10);
+            }
+            String s1 = MainActivity.arrayTP.get(Utils.getDZPos(s));
+            ZBLog.e("阴日取日干："+MainActivity.s+"  的寄宫："+jg+"  地盘："+jg+"  逆数三位对应天盘："+
+                    s+"  地盘："+s+"  对应天盘："+s1+" ，故取："+s1+"  为初传");
+            return s1;
+        }
+        return "";
     }
 
     public static String getBZCC(String yy){
@@ -1430,6 +1549,8 @@ public class FirstPassUtils {
         jkBean.jike = i;
         return jkBean;
     }
+
+
 
 
     static class Student implements Comparator<JKBean> {

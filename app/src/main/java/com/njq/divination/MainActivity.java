@@ -228,6 +228,12 @@ public class MainActivity extends AppCompatActivity {
                     "   初传："+chu+"\n" +
                     "   中传："+tvZhong.getText().toString()+"\n" +
                     "   末传："+tvMo.getText().toString()+"\n");
+        }else if(cc!=null&&cc.fa.equals("八专注")){
+            Utils.setBAZ(tvZhong,tvMo);
+            ZBLog.e("\n=========得出三传========\n" +
+                    "   初传："+chu+"\n" +
+                    "   中传："+tvZhong.getText().toString()+"\n" +
+                    "   末传："+tvMo.getText().toString()+"\n");
         }else{
             String zhong = arrayTP.get(Utils.getDZPos(chu));
             String mo = arrayTP.get(Utils.getDZPos(zhong));
