@@ -1,7 +1,9 @@
 package com.njq.divination;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -17,6 +19,8 @@ import com.njq.divination.server.LogService;
 import com.njq.divination.tools.FirstPassUtils;
 import com.njq.divination.tools.TimeUtils;
 import com.njq.divination.tools.Utils;
+import com.njq.divination.tools.XiaomiUtil;
+import com.njq.divination.tools.XmDgModel;
 import com.njq.divination.tools.ZBLog;
 
 import org.greenrobot.eventbus.EventBus;
@@ -112,6 +116,8 @@ public class MainActivity extends AppCompatActivity {
     private String k2;
     private String k3;
     private String k4;
+    private XmDgModel model;
+    private boolean isFirst = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -124,6 +130,7 @@ public class MainActivity extends AppCompatActivity {
         if (!EventBus.getDefault().isRegistered(this)) {
             EventBus.getDefault().register(this);
         }
+        getXuanfu(this);
         handler.sendEmptyMessageDelayed(1,300);
     }
 
@@ -299,4 +306,39 @@ public class MainActivity extends AppCompatActivity {
 
         }
     };
+
+    @SuppressLint("NewApi")
+    public void getXuanfu(final Context context) {
+        if (model == null) {
+            model = new XmDgModel(context);
+        }
+        //小米手机之外的悬浮圈窗权限检查操作
+        if (!XiaomiUtil.isMIUI()) {
+            model.permission1(context);
+        }
+        //小米手机的悬浮圈窗权限检查操作
+        if (XiaomiUtil.isMIUI() && isFirst) {
+            isFirst = false;
+            final int version = Build.VERSION.SDK_INT;
+            if (version >= 19 && !XiaomiUtil.isMiuiFloatWindowOpAllowed(context)) {
+                model.showxiaomidg();
+            }else{
+                if(!ServiceUtils.isServiceRunning(LogService.class)){
+                    ServiceUtils.startService(LogService.class);
+                }
+            }
+        } else if (XiaomiUtil.isMIUI() && !isFirst) {
+            if (Build.VERSION.SDK_INT >= 19) {
+                if (XiaomiUtil.isMiuiFloatWindowOpAllowed(context)) {
+                    if(!ServiceUtils.isServiceRunning(LogService.class)){
+                        ServiceUtils.startService(LogService.class);
+                    }
+                }
+            }else{
+                if(!ServiceUtils.isServiceRunning(LogService.class)){
+                    ServiceUtils.startService(LogService.class);
+                }
+            }
+        }
+    }
 }
